@@ -244,7 +244,7 @@ export async function signUpWithPassword(
         };
       }
       return {
-        error: 'Account created. Enter the verification code from your email to continue.',
+        error: undefined,
         needsEmailVerification: true,
         email,
         pendingAuthenticationToken,
