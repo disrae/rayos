@@ -1,17 +1,19 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Rayos Lightning Bolts Mark</title>
-  <desc id="desc">Two angular lightning bolts forming a bold geometric logo mark.</desc>
+  <desc id="desc">Two rounded lightning bolts forming a clean geometric logo mark.</desc>
   <defs>
-    <linearGradient id="boltA" x1="92" y1="72" x2="252" y2="440" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7DD3FC"/>
-      <stop offset="1" stop-color="#38BDF8"/>
+    <linearGradient id="boltA" x1="120" y1="60" x2="280" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFECA1"/>
+      <stop offset="100%" stop-color="#FFD300"/>
     </linearGradient>
-    <linearGradient id="boltB" x1="260" y1="72" x2="420" y2="440" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#67E8F9"/>
-      <stop offset="1" stop-color="#22D3EE"/>
+    <linearGradient id="boltB" x1="280" y1="60" x2="440" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD300"/>
+      <stop offset="100%" stop-color="#F5A524"/>
     </linearGradient>
   </defs>
 
-  <path d="M210 60L96 278H190L138 452L302 220H206L210 60Z" fill="url(#boltA)"/>
-  <path d="M374 60L260 278H354L302 452L466 220H370L374 60Z" fill="url(#boltB)"/>
+  <g stroke-width="16" stroke-linejoin="round">
+    <path d="M210 60L96 278H190L138 452L302 220H206L210 60Z" fill="url(#boltA)" stroke="url(#boltA)"/>
+    <path d="M374 60L260 278H354L302 452L466 220H370L374 60Z" fill="url(#boltB)" stroke="url(#boltB)"/>
+  </g>
 </svg>

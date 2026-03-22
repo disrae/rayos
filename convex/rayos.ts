@@ -195,7 +195,16 @@ export const getMemberDashboard = query({
 export const getActorState = query({
   args: {},
   handler: async (ctx) => {
-    const identity = await requireIdentity(ctx);
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return {
+        email: null,
+        name: null,
+        hasMemberProfile: false,
+        hasEndUserProfile: false,
+      };
+    }
+
     const member = await ctx.db
       .query('members')
       .withIndex('by_tokenIdentifier', (q) => q.eq('tokenIdentifier', identity.tokenIdentifier))

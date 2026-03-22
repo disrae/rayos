@@ -58,7 +58,7 @@ export default function IntakePage() {
           {!user ? (
             <div className="space-y-4 text-center">
               <p className="text-sm text-muted-foreground">
-                Sign in or create an account to join the conversation.
+                Sign in or create an account to join this business conversation.
               </p>
               <div className="flex flex-col gap-2">
                 <Button asChild>
@@ -68,12 +68,15 @@ export default function IntakePage() {
                   </a>
                 </Button>
                 <Button variant="outline" asChild>
-                  <a href="/sign-up">
+                  <a href={`/sign-up?intent=end-user&inviteToken=${token}`}>
                     <UserPlus className="size-4" />
                     Create account
                   </a>
                 </Button>
               </div>
+              <p className="text-xs text-muted-foreground">
+                This path is only for people invited by a business.
+              </p>
             </div>
           ) : (
             <>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/status-badge';
 import { Copy, XCircle } from 'lucide-react';
@@ -17,7 +18,10 @@ export function IntakeLinkCard({
   onDisable?: () => void;
   className?: string;
 }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const [origin, setOrigin] = useState('');
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
   const url = `${origin}/i/${token}`;
 
   function handleCopy() {

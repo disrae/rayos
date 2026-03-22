@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { useMutation, useQuery } from 'convex/react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useConvexAuth, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { AppShell, AppShellBody, AppShellSidebar, AppShellMain } from '@/components/app-shell';
 import { PageHeader } from '@/components/page-header';
@@ -19,11 +19,14 @@ import { Badge } from '@/components/ui/badge';
 import { MessageSquare, LinkIcon } from 'lucide-react';
 
 export default function EndUserDashboardPage() {
+  const router = useRouter();
+  const { isLoading: isAuthLoading, isAuthenticated } = useConvexAuth();
+  const attemptedAuthRefreshRef = useRef(false);
   const searchParams = useSearchParams();
   const initialConversationId = searchParams.get('conversationId');
   const sendEndUserMessage = useMutation(api.rayos.sendEndUserMessage);
 
-  const dashboard = useQuery(api.rayos.listEndUserDashboard, {});
+  const dashboard = useQuery(api.rayos.listEndUserDashboard, isAuthenticated ? {} : 'skip');
   const [selectedConversationIdState, setSelectedConversationIdState] = useState<Id<'conversations'> | null>(
     initialConversationId as Id<'conversations'> | null,
   );
@@ -50,13 +53,20 @@ export default function EndUserDashboardPage() {
     [dashboard?.conversations],
   );
 
+  useEffect(() => {
+    if (!isAuthLoading && !isAuthenticated && !attemptedAuthRefreshRef.current) {
+      attemptedAuthRefreshRef.current = true;
+      router.refresh();
+    }
+  }, [isAuthLoading, isAuthenticated, router]);
+
   async function onSendMessage(body: string) {
     if (!selectedConversationId) return;
     await sendEndUserMessage({ conversationId: selectedConversationId, body });
   }
 
   // Loading state
-  if (dashboard === undefined) {
+  if (isAuthLoading || dashboard === undefined) {
     return (
       <AppShell>
         <PageHeader />
@@ -82,6 +92,27 @@ export default function EndUserDashboardPage() {
     );
   }
 
+  if (!isAuthenticated) {
+    return (
+      <AppShell>
+        <PageHeader />
+        <AppShellBody>
+          <AppShellMain className="items-center justify-center">
+            <EmptyState
+              heading="Sign in required"
+              description="Please sign in again to open your chats."
+              action={
+                <Button asChild>
+                  <Link href="/sign-in">Go to sign in</Link>
+                </Button>
+              }
+            />
+          </AppShellMain>
+        </AppShellBody>
+      </AppShell>
+    );
+  }
+
   // Not linked
   if (dashboard === null) {
     return (
@@ -95,7 +126,7 @@ export default function EndUserDashboardPage() {
               description="Join with an invite link from a business to access your chats."
               action={
                 <Button variant="outline" asChild>
-                  <Link href="/start">Go to onboarding</Link>
+                  <Link href="/start">Enter invite link</Link>
                 </Button>
               }
             />

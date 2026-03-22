@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { useMutation, useQuery } from 'convex/react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useConvexAuth, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { AppShell, AppShellBody, AppShellSidebar, AppShellMain } from '@/components/app-shell';
 import { PageHeader } from '@/components/page-header';
 import { ConversationList, type ConversationItem } from '@/components/conversation-list';
@@ -26,9 +27,12 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import { Plus, MessageSquare, LinkIcon, Trash2, AlertTriangle } from 'lucide-react';
+import { Plus, MessageSquare, Trash2, AlertTriangle } from 'lucide-react';
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const { isLoading: isAuthLoading, isAuthenticated } = useConvexAuth();
+  const attemptedAuthRefreshRef = useRef(false);
   const createIntakeLink = useMutation(api.rayos.createIntakeLink);
   const disableIntakeLink = useMutation(api.rayos.disableIntakeLink);
   const sendMemberMessage = useMutation(api.rayos.sendMemberMessage);
@@ -37,7 +41,7 @@ export default function DashboardPage() {
   const [selectedConversationIdState, setSelectedConversationIdState] = useState<Id<'conversations'> | null>(null);
   const [isDeletingUser, setIsDeletingUser] = useState(false);
 
-  const dashboard = useQuery(api.rayos.getMemberDashboard, {});
+  const dashboard = useQuery(api.rayos.getMemberDashboard, isAuthenticated ? {} : 'skip');
 
   const selectedConversationId = useMemo(() => {
     if (!dashboard) return null;
@@ -67,6 +71,13 @@ export default function DashboardPage() {
       })) ?? [],
     [dashboard?.conversations],
   );
+
+  useEffect(() => {
+    if (!isAuthLoading && !isAuthenticated && !attemptedAuthRefreshRef.current) {
+      attemptedAuthRefreshRef.current = true;
+      router.refresh();
+    }
+  }, [isAuthLoading, isAuthenticated, router]);
 
   async function onCreateIntakeLink() {
     await createIntakeLink({});
@@ -100,7 +111,7 @@ export default function DashboardPage() {
   }
 
   // Loading state
-  if (dashboard === undefined) {
+  if (isAuthLoading || dashboard === undefined) {
     return (
       <AppShell>
         <PageHeader />
@@ -126,6 +137,27 @@ export default function DashboardPage() {
     );
   }
 
+  if (!isAuthenticated) {
+    return (
+      <AppShell>
+        <PageHeader />
+        <AppShellBody>
+          <AppShellMain className="items-center justify-center">
+            <EmptyState
+              heading="Sign in required"
+              description="Please sign in again to open your dashboard."
+              action={
+                <Button asChild>
+                  <Link href="/sign-in">Go to sign in</Link>
+                </Button>
+              }
+            />
+          </AppShellMain>
+        </AppShellBody>
+      </AppShell>
+    );
+  }
+
   // Not onboarded
   if (dashboard === null) {
     return (
@@ -135,10 +167,10 @@ export default function DashboardPage() {
           <AppShellMain className="items-center justify-center">
             <EmptyState
               heading="No business profile yet"
-              description="Complete onboarding to create your business account before using the dashboard."
+              description="Create your business account from sign up before using the dashboard."
               action={
                 <Button asChild>
-                  <Link href="/start">Go to onboarding</Link>
+                  <Link href="/sign-up">Go to business sign up</Link>
                 </Button>
               }
             />
