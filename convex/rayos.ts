@@ -231,7 +231,7 @@ export const createBusinessAccount = mutation({
   args: {
     fullName: v.string(),
     businessName: v.string(),
-    pretendPaid: v.boolean(),
+    plan: v.union(v.literal('free'), v.literal('startup'), v.literal('growth')),
   },
   handler: async (ctx, args) => {
     const identity = await requireIdentity(ctx);
@@ -241,9 +241,6 @@ export const createBusinessAccount = mutation({
       .unique();
     if (existingMember) {
       return { businessId: existingMember.businessId, memberId: existingMember._id };
-    }
-    if (!args.pretendPaid) {
-      throw new Error('Please acknowledge the pretend pricing checkbox to continue.');
     }
 
     const trimmedBusinessName = args.businessName.trim();
@@ -263,6 +260,7 @@ export const createBusinessAccount = mutation({
     const businessId = await ctx.db.insert('businesses', {
       name: trimmedBusinessName,
       slug,
+      plan: args.plan,
       createdByTokenIdentifier: identity.tokenIdentifier,
       createdAt: now,
     });

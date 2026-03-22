@@ -1,13 +1,10 @@
 'use server';
 
 import { getWorkOS, saveSession } from '@workos-inc/authkit-nextjs';
-import { ConvexHttpClient } from 'convex/browser';
 import { redirect } from 'next/navigation';
-import { api } from '@/convex/_generated/api';
 
 const WORKOS_CLIENT_ID = process.env.WORKOS_CLIENT_ID ?? '';
 const WORKOS_REDIRECT_URI = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI ?? '';
-const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL ?? '';
 
 function extractWorkOSErrorDetails(err: unknown) {
   if (!err || typeof err !== 'object') {
@@ -262,30 +259,6 @@ export async function signUpWithPassword(
     return { error: `Account created, but sign-in failed: ${message}` };
   }
 
-  const accessToken = authResponse.accessToken;
-  if (!accessToken) {
-    return { error: 'Could not establish a secure session. Please try signing in.' };
-  }
-  if (!CONVEX_URL) {
-    return { error: 'Missing Convex configuration. Please contact support.' };
-  }
-
-  if (!isInviteSignup) {
-    try {
-      const convex = new ConvexHttpClient(CONVEX_URL);
-      convex.setAuth(accessToken);
-      await convex.mutation(api.rayos.createBusinessAccount, {
-        fullName: `${firstName} ${lastName}`.trim(),
-        businessName,
-        pretendPaid: true,
-      });
-    } catch (err) {
-      const message = toErrorMessage(err);
-      console.error('Convex createBusinessAccount during signup failed:', message);
-      return { error: `Account created, but workspace setup failed: ${message}` };
-    }
-  }
-
   try {
     await saveSession(authResponse, WORKOS_REDIRECT_URI);
   } catch (err) {
@@ -297,7 +270,10 @@ export async function signUpWithPassword(
   if (isInviteSignup) {
     redirect(`/i/${inviteToken}`);
   }
-  redirect('/dashboard');
+
+  const fullName = `${firstName} ${lastName}`.trim();
+  const pricingParams = new URLSearchParams({ fullName, businessName });
+  redirect(`/start/pricing?${pricingParams.toString()}`);
 }
 
 export async function completeSignUpWithVerificationCode(
@@ -344,36 +320,6 @@ export async function completeSignUpWithVerificationCode(
     return { error: `Could not verify email: ${message}` };
   }
 
-  const accessToken = authResponse.accessToken;
-  if (!accessToken) {
-    return { error: 'Could not establish a secure session. Please try signing in.' };
-  }
-  if (!CONVEX_URL) {
-    return { error: 'Missing Convex configuration. Please contact support.' };
-  }
-
-  if (!isInviteSignup) {
-    if (!businessName) {
-      return { error: 'Business name is required to finish account setup.' };
-    }
-    if (!firstName || !lastName) {
-      return { error: 'First and last name are required to finish account setup.' };
-    }
-    try {
-      const convex = new ConvexHttpClient(CONVEX_URL);
-      convex.setAuth(accessToken);
-      await convex.mutation(api.rayos.createBusinessAccount, {
-        fullName: `${firstName} ${lastName}`.trim(),
-        businessName,
-        pretendPaid: true,
-      });
-    } catch (err) {
-      const message = toErrorMessage(err);
-      console.error('Convex createBusinessAccount during email verification failed:', message);
-      return { error: `Email verified, but workspace setup failed: ${message}` };
-    }
-  }
-
   try {
     await saveSession(authResponse, WORKOS_REDIRECT_URI);
   } catch (err) {
@@ -385,5 +331,8 @@ export async function completeSignUpWithVerificationCode(
   if (isInviteSignup) {
     redirect(`/i/${inviteToken}`);
   }
-  redirect('/dashboard');
+
+  const fullName = `${firstName} ${lastName}`.trim();
+  const pricingParams = new URLSearchParams({ fullName, businessName });
+  redirect(`/start/pricing?${pricingParams.toString()}`);
 }

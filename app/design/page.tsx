@@ -83,8 +83,8 @@ export default function DesignPage() {
           <p className="mt-3 max-w-2xl text-muted-foreground">
             A living reference of brand language, colors, typography, and components for Rayos.
             Named for rays of sunlight, Rayos brings light to project communication.
-            Sky-blue primary for trust. Warm amber accent for a nod to &ldquo;rayos.&rdquo;
-            Slate neutrals for structure.
+            Golden-yellow primary for warmth, a direct nod to &ldquo;rayos.&rdquo;
+            Warm amber accent. Slate neutrals for structure.
           </p>
         </div>
       </div>
@@ -179,13 +179,13 @@ export default function DesignPage() {
         <Separator />
 
         {/* ── 1. Colors ── */}
-        <Section title="Colors" description="Core palette derived from CSS custom properties. Sky-blue primary, warm amber accent, slate neutrals, and semantic colors for status feedback.">
+        <Section title="Colors" description="Core palette derived from CSS custom properties. Golden-yellow primary, warm amber accent, slate neutrals, and semantic colors for status feedback.">
           <div className="space-y-6">
             <div>
               <h3 className="mb-3 text-sm font-medium text-muted-foreground">Primary &amp; Accent</h3>
               <div className="flex flex-wrap gap-4">
-                <Swatch name="Primary" cssVar="--primary" hex="#0ea5e9" />
-                <Swatch name="Primary FG" cssVar="--primary-foreground" hex="#f8fafc" />
+                <Swatch name="Primary" cssVar="--primary" hex="#FFD300" />
+                <Swatch name="Primary FG" cssVar="--primary-foreground" hex="#0f172a" />
                 <Swatch name="Accent" cssVar="--accent" hex="#fef3c7" />
                 <Swatch name="Accent FG" cssVar="--accent-foreground" hex="#92400e" />
               </div>
@@ -205,7 +205,7 @@ export default function DesignPage() {
               <h3 className="mb-3 text-sm font-medium text-muted-foreground">Borders &amp; Semantic</h3>
               <div className="flex flex-wrap gap-4">
                 <Swatch name="Border" cssVar="--border" hex="#e2e8f0" />
-                <Swatch name="Ring" cssVar="--ring" hex="#0ea5e9" />
+                <Swatch name="Ring" cssVar="--ring" hex="#846B00" />
                 <Swatch name="Destructive" cssVar="--destructive" hex="#ef4444" />
                 <Swatch name="Success" cssVar="--success" hex="#10b981" />
                 <Swatch name="Warning" cssVar="--warning" hex="#f59e0b" />
@@ -377,10 +377,10 @@ export default function DesignPage() {
         <Section title="Avatars" description="User representations with initials fallback. Used in conversation lists, page headers, and chat.">
           <div className="flex flex-wrap items-center gap-4 rounded-xl border border-border bg-card p-6">
             <Avatar className="size-8">
-              <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">AR</AvatarFallback>
+              <AvatarFallback className="bg-primary/10 text-xs font-medium text-foreground">AR</AvatarFallback>
             </Avatar>
             <Avatar className="size-10">
-              <AvatarFallback className="bg-primary/10 text-sm font-medium text-primary">JD</AvatarFallback>
+              <AvatarFallback className="bg-primary/10 text-sm font-medium text-foreground">JD</AvatarFallback>
             </Avatar>
             <Avatar className="size-12">
               <AvatarFallback className="bg-accent text-sm font-semibold text-accent-foreground">MK</AvatarFallback>
@@ -443,7 +443,7 @@ export default function DesignPage() {
         <Separator />
 
         {/* ── 10. Chat Bubbles ── */}
-        <Section title="Chat Bubbles" description="Message display for conversations. Three sender types: self (primary blue), other (card white), and system (centered muted).">
+        <Section title="Chat Bubbles" description="Message display for conversations. Three sender types: self (primary gold), other (card white), and system (centered muted).">
           <div className="space-y-3 rounded-xl border border-border bg-surface p-6">
             <ChatBubble sender="other">Hi, I have a question about the renovation timeline.</ChatBubble>
             <ChatBubble sender="self">Sure! We're currently on track for the March deadline. I'll send the updated schedule today.</ChatBubble>

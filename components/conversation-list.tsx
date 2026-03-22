@@ -43,7 +43,7 @@ export function ConversationList({
           )}
         >
           <Avatar className="size-8 shrink-0">
-            <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
+            <AvatarFallback className="bg-primary/10 text-xs font-medium text-foreground">
               {convo.label[0]?.toUpperCase() ?? '?'}
             </AvatarFallback>
           </Avatar>

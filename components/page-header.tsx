@@ -56,7 +56,7 @@ export function PageHeader({
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="rounded-full">
               <Avatar className="size-8">
-                <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
+                <AvatarFallback className="bg-primary/10 text-xs font-medium text-foreground">
                   {getInitials(user.firstName, user.email)}
                 </AvatarFallback>
               </Avatar>

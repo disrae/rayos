@@ -2,6 +2,9 @@
   "name": "rayos",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
   "homepage": "https://github.com/workos/template-convex-nextjs-authkit/#readme",
   "convex-authkit-auto-provisioning": true,

@@ -4,14 +4,14 @@
  * Rayos Design Tokens
  *
  * Brand: "Rayos" = rays of light.
- * Feel: clear morning light — warm, calm, trustworthy.
- * Palette: sky-blue primary, warm amber accent, slate neutrals.
+ * Feel: golden morning light — warm, calm, trustworthy.
+ * Palette: golden-yellow primary, warm amber accent, slate neutrals.
  */
 
 :root {
-  /* ── Primary (sky blue) ── */
-  --primary: oklch(0.685 0.169 237.323);
-  --primary-foreground: oklch(0.985 0.002 247.858);
+  /* ── Primary (golden yellow — #FFD300) ── */
+  --primary: oklch(0.881 0.2 93.6);
+  --primary-foreground: oklch(0.129 0.042 264.695);
 
   /* ── Accent (warm amber) ── */
   --accent: oklch(0.954 0.038 75.164);
@@ -36,14 +36,14 @@
   /* ── Borders & rings ── */
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.685 0.169 237.323);
+  --ring: oklch(0.52 0.14 90);
 
   /* ── Destructive ── */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0.002 247.858);
 
   /* ── Chart palette ── */
-  --chart-1: oklch(0.685 0.169 237.323);
+  --chart-1: oklch(0.881 0.2 93.6);
   --chart-2: oklch(0.8 0.123 75.164);
   --chart-3: oklch(0.554 0.022 257.417);
   --chart-4: oklch(0.696 0.17 162.48);
@@ -52,12 +52,12 @@
   /* ── Sidebar ── */
   --sidebar: oklch(0.985 0.002 247.858);
   --sidebar-foreground: oklch(0.208 0.042 264.695);
-  --sidebar-primary: oklch(0.685 0.169 237.323);
-  --sidebar-primary-foreground: oklch(0.985 0.002 247.858);
+  --sidebar-primary: oklch(0.881 0.2 93.6);
+  --sidebar-primary-foreground: oklch(0.129 0.042 264.695);
   --sidebar-accent: oklch(0.968 0.007 247.858);
   --sidebar-accent-foreground: oklch(0.208 0.042 264.695);
   --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.685 0.169 237.323);
+  --sidebar-ring: oklch(0.52 0.14 90);
 
   /* ── Radii ── */
   --radius: 0.625rem;
