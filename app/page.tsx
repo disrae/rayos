@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-destructive">
+                <Button variant="ghost" size="sm" className="text-muted-foreground">
                   Delete account
                 </Button>
               </DialogTrigger>

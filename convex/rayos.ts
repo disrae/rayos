@@ -365,10 +365,7 @@ export const claimIntakeLink = mutation({
     }
 
     const identityEmail = identity.email ? normalizeEmail(identity.email) : null;
-    if (!identityEmail) {
-      throw new Error('Your account needs an email address to join a business.');
-    }
-    if (identityEmail !== providedEmail) {
+    if (identityEmail && identityEmail !== providedEmail) {
       throw new Error('For security, the intake email must match your signed-in account email.');
     }
 
