@@ -133,7 +133,7 @@ export async function signInWithPassword(
     return { error: 'Invalid email or password.' };
   }
 
-  redirect('/start');
+  redirect('/dashboard');
 }
 
 export async function signUpWithPassword(
@@ -273,7 +273,7 @@ export async function signUpWithPassword(
 
   const fullName = `${firstName} ${lastName}`.trim();
   const pricingParams = new URLSearchParams({ fullName, businessName });
-  redirect(`/start/pricing?${pricingParams.toString()}`);
+  redirect(`/pricing?${pricingParams.toString()}`);
 }
 
 export async function completeSignUpWithVerificationCode(
@@ -334,5 +334,5 @@ export async function completeSignUpWithVerificationCode(
 
   const fullName = `${firstName} ${lastName}`.trim();
   const pricingParams = new URLSearchParams({ fullName, businessName });
-  redirect(`/start/pricing?${pricingParams.toString()}`);
+  redirect(`/pricing?${pricingParams.toString()}`);
 }

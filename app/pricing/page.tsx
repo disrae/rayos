@@ -65,18 +65,18 @@ export default function PricingPage() {
   const [busy, setBusy] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null);
 
-  const needsRedirectToStart = !fullName || !businessName;
-  const needsRedirectToDashboard = !needsRedirectToStart && !!actorState?.hasMemberProfile;
+  const missingSignupContext = !fullName || !businessName;
+  const needsRedirectToDashboard = !missingSignupContext && !!actorState?.hasMemberProfile;
 
   useEffect(() => {
-    if (needsRedirectToStart) {
-      router.replace('/start');
+    if (missingSignupContext) {
+      router.replace('/sign-up');
     } else if (needsRedirectToDashboard) {
       router.replace('/dashboard');
     }
-  }, [needsRedirectToStart, needsRedirectToDashboard, router]);
+  }, [missingSignupContext, needsRedirectToDashboard, router]);
 
-  if (needsRedirectToStart || needsRedirectToDashboard || !actorState) {
+  if (missingSignupContext || needsRedirectToDashboard || !actorState) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-6">
         <div className="w-full max-w-4xl">
@@ -129,7 +129,7 @@ export default function PricingPage() {
                 key={plan.id}
                 className={`relative flex flex-col rounded-xl border p-6 shadow-sm transition-all ${
                   isHighlighted
-                    ? 'border-primary bg-primary/[0.03] ring-1 ring-primary/20'
+                    ? 'border-primary bg-primary/3 ring-1 ring-primary/20'
                     : 'border-border bg-card'
                 }`}
               >

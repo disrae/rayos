@@ -117,20 +117,34 @@ export default function DashboardPage() {
         <PageHeader />
         <AppShellBody>
           <AppShellSidebar>
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <Skeleton className="size-8 rounded-full" />
-                  <div className="flex-1 space-y-1.5">
-                    <Skeleton className="h-3.5 w-28" />
-                    <Skeleton className="h-3 w-40" />
-                  </div>
+            <div className="space-y-6">
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <h2 className="text-sm font-semibold text-foreground">Intake Links</h2>
+                  <Skeleton className="h-7 w-14 rounded-md" />
                 </div>
-              ))}
+                <Skeleton className="h-3 w-full max-w-[220px]" />
+              </div>
+
+              <Separator />
+
+              <div>
+                <h2 className="mb-3 text-sm font-semibold text-foreground">Conversations</h2>
+                <div className="space-y-2">
+                  <Skeleton className="h-10 w-full rounded-lg" />
+                  <Skeleton className="h-10 w-full rounded-lg" />
+                  <Skeleton className="h-10 w-full rounded-lg" />
+                </div>
+              </div>
             </div>
           </AppShellSidebar>
           <AppShellMain className="items-center justify-center">
-            <Skeleton className="h-12 w-48" />
+            <div className="w-full max-w-md space-y-4 px-6 text-center">
+              <Skeleton className="mx-auto size-10 rounded-full" />
+              <Skeleton className="mx-auto h-5 w-44" />
+              <Skeleton className="mx-auto h-4 w-72 max-w-full" />
+              <Skeleton className="mx-auto h-9 w-40 rounded-md" />
+            </div>
           </AppShellMain>
         </AppShellBody>
       </AppShell>
