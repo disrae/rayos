@@ -1,150 +1,96 @@
 'use client';
 
-import { Authenticated, Unauthenticated, useMutation, useQuery } from 'convex/react';
-import { api } from '../convex/_generated/api';
-import Link from 'next/link';
 import { useAuth } from '@workos-inc/authkit-nextjs/components';
-import type { User } from '@workos-inc/node';
+import { useMutation } from 'convex/react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import { api } from '@/convex/_generated/api';
 
-export default function Home() {
+export default function HomePage() {
   const { user, signOut } = useAuth();
+  const deleteMyAccount = useMutation(api.rayos.deleteMyAccount);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  return (
-    <>
-      <header className="sticky top-0 z-10 bg-background p-4 border-b-2 border-slate-200 dark:border-slate-800 flex flex-row justify-between items-center">
-        Convex + Next.js + WorkOS
-        {user && <UserMenu user={user} onSignOut={signOut} />}
-      </header>
-      <main className="p-8 flex flex-col gap-8">
-        <h1 className="text-4xl font-bold text-center">Convex + Next.js + WorkOS</h1>
-        <Authenticated>
-          <Content />
-        </Authenticated>
-        <Unauthenticated>
-          <SignInForm />
-        </Unauthenticated>
-      </main>
-    </>
-  );
-}
+  async function onDeleteMyAccount() {
+    const confirmed = window.confirm(
+      'Delete your end-user account from this workspace?\n\nYou will lose access, but existing chat history may be kept for project records.',
+    );
+    if (!confirmed) {
+      return;
+    }
 
-function SignInForm() {
-  return (
-    <div className="flex flex-col gap-8 w-96 mx-auto">
-      <p>Log in to see the numbers</p>
-      <a href="/sign-in">
-        <button className="bg-foreground text-background px-4 py-2 rounded-md">Sign in</button>
-      </a>
-      <a href="/sign-up">
-        <button className="bg-foreground text-background px-4 py-2 rounded-md">Sign up</button>
-      </a>
-    </div>
-  );
-}
-
-function Content() {
-  const { viewer, numbers } =
-    useQuery(api.myFunctions.listNumbers, {
-      count: 10,
-    }) ?? {};
-  const addNumber = useMutation(api.myFunctions.addNumber);
-
-  if (viewer === undefined || numbers === undefined) {
-    return <div className="mx-auto"></div>;
+    setDeleteError(null);
+    setIsDeleting(true);
+    try {
+      await deleteMyAccount({});
+      await signOut();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Could not delete account. Please try again.';
+      setDeleteError(message);
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
   return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto">
-      <p>Welcome {viewer ?? 'Anonymous'}!</p>
-      <p>
-        Click the button below and open this page in another window - this data is persisted in the Convex cloud
-        database!
-      </p>
-      <p>
-        <button
-          className="bg-foreground text-background text-sm px-4 py-2 rounded-md"
-          onClick={() => {
-            void addNumber({ value: Math.floor(Math.random() * 10) });
-          }}
-        >
-          Add a random number
-        </button>
-      </p>
-      <p>Numbers: {numbers?.length === 0 ? 'Click the button!' : (numbers?.join(', ') ?? '...')}</p>
-      <p>
-        Edit{' '}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          convex/myFunctions.ts
-        </code>{' '}
-        to change your backend
-      </p>
-      <p>
-        Edit{' '}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          app/page.tsx
-        </code>{' '}
-        to change your frontend
-      </p>
-      <p>
-        See the{' '}
-        <Link href="/server" className="underline hover:no-underline">
-          /server route
-        </Link>{' '}
-        for an example of loading data in a server component
-      </p>
-      <div className="flex flex-col">
-        <p className="text-lg font-bold">Useful resources:</p>
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Convex docs"
-              description="Read comprehensive documentation for all Convex features."
-              href="https://docs.convex.dev/home"
-            />
-            <ResourceCard
-              title="Stack articles"
-              description="Learn about best practices, use cases, and more from a growing
-            collection of articles, videos, and walkthroughs."
-              href="https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
-            />
+    <main className="min-h-screen bg-sky-50 text-slate-900">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 py-12">
+        <header className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image src="/rayos-bolts.svg" alt="Rayos logo" width={32} height={32} />
+            <p className="text-xl font-semibold">Rayos</p>
           </div>
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Templates"
-              description="Browse our collection of templates to get started quickly."
-              href="https://www.convex.dev/templates"
-            />
-            <ResourceCard
-              title="Discord"
-              description="Join our developer community to ask questions, trade tips & tricks,
-            and show off your projects."
-              href="https://www.convex.dev/community"
-            />
+          {user ? (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  void onDeleteMyAccount();
+                }}
+                disabled={isDeleting}
+                className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm text-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isDeleting ? 'Deleting...' : 'Delete account'}
+              </button>
+              <button
+                onClick={() => {
+                  void signOut();
+                }}
+                className="rounded-lg border border-sky-200 bg-white px-4 py-2 text-sm"
+              >
+                Sign out
+              </button>
+            </div>
+          ) : null}
+        </header>
+
+        <section className="rounded-2xl border border-sky-100 bg-white p-8 shadow-sm">
+          <h1 className="text-4xl font-semibold tracking-tight">Calm customer chat for project teams</h1>
+          <p className="mt-4 max-w-2xl text-slate-600">
+            Rayos helps businesses and their end users stay aligned through clear project conversations.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {user ? (
+              <>
+                <Link href="/start" className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white">
+                  Continue to Rayos
+                </Link>
+              </>
+            ) : (
+              <>
+                <a href="/sign-in" className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white">
+                  Sign in
+                </a>
+                <a href="/sign-up" className="rounded-lg border border-sky-200 bg-white px-4 py-2 font-medium">
+                  Sign up
+                </a>
+              </>
+            )}
           </div>
-        </div>
+          {deleteError ? <p className="mt-3 text-sm text-red-600">{deleteError}</p> : null}
+        </section>
       </div>
-    </div>
-  );
-}
-
-function ResourceCard({ title, description, href }: { title: string; description: string; href: string }) {
-  return (
-    <div className="flex flex-col gap-2 bg-slate-200 dark:bg-slate-800 p-4 rounded-md h-28 overflow-auto">
-      <a href={href} className="text-sm underline hover:no-underline">
-        {title}
-      </a>
-      <p className="text-xs">{description}</p>
-    </div>
-  );
-}
-
-function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm">{user.email}</span>
-      <button onClick={onSignOut} className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600">
-        Sign out
-      </button>
-    </div>
+    </main>
   );
 }
