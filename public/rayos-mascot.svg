@@ -1,0 +1,80 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Rayos Mascot - "Ray &amp; Os"</title>
+  <desc>Two friendly, gently floating lightning bolt mascots representing clarity and communication for Rayos.</desc>
+  <defs>
+    <linearGradient id="boltA" x1="120" y1="60" x2="280" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFECA1"/>
+      <stop offset="100%" stop-color="#FFD300"/>
+    </linearGradient>
+    <linearGradient id="boltB" x1="280" y1="60" x2="440" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD300"/>
+      <stop offset="100%" stop-color="#F5A524"/>
+    </linearGradient>
+    
+    <!-- Gentle drop shadow for depth -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#F5A524" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <g stroke-width="16" stroke-linejoin="round" filter="url(#shadow)">
+    <!-- Left Bolt Mascot ("Ray") -->
+    <g>
+      <animateTransform 
+        attributeName="transform" 
+        type="translate" 
+        values="0,0; 0,-10; 0,0" 
+        keyTimes="0; 0.5; 1"
+        calcMode="spline"
+        keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+        dur="4s" 
+        repeatCount="indefinite" />
+        
+      <path d="M210 60L96 278H190L138 452L302 220H206L210 60Z" fill="url(#boltA)" stroke="url(#boltA)"/>
+      
+      <!-- Face -->
+      <circle cx="182" cy="240" r="9" fill="#0f172a" />
+      <circle cx="178" cy="237" r="3" fill="#ffffff" />
+      
+      <circle cx="222" cy="240" r="9" fill="#0f172a" />
+      <circle cx="218" cy="237" r="3" fill="#ffffff" />
+      
+      <!-- Gentle Smile -->
+      <path d="M192 256 Q202 268 212 256" stroke="#0f172a" stroke-width="5" stroke-linecap="round" fill="none"/>
+      
+      <!-- Cheeks -->
+      <circle cx="170" cy="252" r="10" fill="#FF8A00" opacity="0.25" />
+      <circle cx="234" cy="252" r="10" fill="#FF8A00" opacity="0.25" />
+    </g>
+
+    <!-- Right Bolt Mascot ("Os") -->
+    <g>
+      <animateTransform 
+        attributeName="transform" 
+        type="translate" 
+        values="0,0; 0,-14; 0,0" 
+        keyTimes="0; 0.5; 1"
+        calcMode="spline"
+        keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+        dur="4.5s" 
+        repeatCount="indefinite" />
+        
+      <path d="M374 60L260 278H354L302 452L466 220H370L374 60Z" fill="url(#boltB)" stroke="url(#boltB)"/>
+      
+      <!-- Face -->
+      <circle cx="346" cy="238" r="11" fill="#0f172a" />
+      <circle cx="342" cy="234" r="4" fill="#ffffff" />
+      
+      <circle cx="386" cy="238" r="11" fill="#0f172a" />
+      <circle cx="382" cy="234" r="4" fill="#ffffff" />
+      
+      <!-- Open Happy Smile -->
+      <path d="M354 256 Q366 270 378 256" stroke="#0f172a" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M357 261 Q366 276 375 261 Z" fill="#ef4444" opacity="0.8"/> 
+      
+      <!-- Cheeks -->
+      <circle cx="330" cy="254" r="12" fill="#FF8A00" opacity="0.3" />
+      <circle cx="402" cy="254" r="12" fill="#FF8A00" opacity="0.3" />
+    </g>
+  </g>
+</svg>
