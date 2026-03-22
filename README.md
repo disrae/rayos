@@ -18,7 +18,8 @@ Rayos is a calm, clean B2B chat product for project-based businesses and their e
 ## MVP routes
 
 - `/` landing page
-- `/start` role guard + onboarding (business signup or invite-link entry)
+- `/pricing` business plan selection after signup
+- `/join` invite-link entry for end users
 - `/dashboard` member dashboard (intake links + conversation inbox)
 - `/i/[token]` public intake route for end users
 - `/end-user` end-user dashboard (their own chats)
@@ -48,8 +49,8 @@ Rayos is a calm, clean B2B chat product for project-based businesses and their e
 
 Use this flow to demo end-to-end in minutes:
 
-1. Sign in as a member and open `/start`.
-2. Complete onboarding: name, business name, and the pretend-pricing checkbox.
+1. Sign up as a member (business signup) and continue to `/pricing`.
+2. Choose a plan to complete business account setup.
 3. You land in `/dashboard`; click `New link` and copy the intake URL.
 4. Open the link in another browser/profile and sign in as a different account.
 5. On `/i/[token]`, confirm email and join chat.

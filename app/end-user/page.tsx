@@ -126,7 +126,7 @@ export default function EndUserDashboardPage() {
               description="Join with an invite link from a business to access your chats."
               action={
                 <Button variant="outline" asChild>
-                  <Link href="/start">Enter invite link</Link>
+                  <Link href="/join">Enter invite link</Link>
                 </Button>
               }
             />
@@ -207,7 +207,7 @@ export default function EndUserDashboardPage() {
                 description="Join a business intake link to start chatting."
                 action={
                   <Button variant="outline" size="sm" asChild>
-                    <Link href="/start">Join with invite</Link>
+                    <Link href="/join">Join with invite</Link>
                   </Button>
                 }
               />

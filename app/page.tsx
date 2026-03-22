@@ -98,7 +98,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {user ? (
               <Button size="lg" asChild>
-                <Link href="/start">
+                <Link href="/dashboard">
                   Continue to Rayos
                   <ArrowRight className="size-4" />
                 </Link>
