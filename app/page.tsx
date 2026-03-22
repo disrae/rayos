@@ -6,89 +6,142 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { api } from '@/convex/_generated/api';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { toast } from 'sonner';
+import { ArrowRight, MessageSquare, Shield, Zap } from 'lucide-react';
 
 export default function HomePage() {
   const { user, signOut } = useAuth();
   const deleteMyAccount = useMutation(api.rayos.deleteMyAccount);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   async function onDeleteMyAccount() {
-    const confirmed = window.confirm(
-      'Delete your end-user account from this workspace?\n\nYou will lose access, but existing chat history may be kept for project records.',
-    );
-    if (!confirmed) {
-      return;
-    }
-
-    setDeleteError(null);
     setIsDeleting(true);
     try {
       await deleteMyAccount({});
       await signOut();
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Could not delete account. Please try again.';
-      setDeleteError(message);
+      toast.error(message);
     } finally {
       setIsDeleting(false);
     }
   }
 
   return (
-    <main className="min-h-screen bg-sky-50 text-slate-900">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 py-12">
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image src="/rayos-bolts.svg" alt="Rayos logo" width={32} height={32} />
-            <p className="text-xl font-semibold">Rayos</p>
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4">
+        <div className="flex items-center gap-2.5">
+          <Image src="/rayos-bolts.svg" alt="Rayos" width={28} height={28} />
+          <span className="text-lg font-semibold tracking-tight">Rayos</span>
+        </div>
+        {user ? (
+          <div className="flex items-center gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-destructive">
+                  Delete account
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete your account?</DialogTitle>
+                  <DialogDescription>
+                    This will remove your end-user account from this workspace. You will lose access, but existing chat history may be kept for project records.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    variant="destructive"
+                    disabled={isDeleting}
+                    onClick={() => { void onDeleteMyAccount(); }}
+                  >
+                    {isDeleting ? 'Deleting...' : 'Delete account'}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => { void signOut(); }}
+            >
+              Sign out
+            </Button>
           </div>
-          {user ? (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  void onDeleteMyAccount();
-                }}
-                disabled={isDeleting}
-                className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm text-red-700 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isDeleting ? 'Deleting...' : 'Delete account'}
-              </button>
-              <button
-                onClick={() => {
-                  void signOut();
-                }}
-                className="rounded-lg border border-sky-200 bg-white px-4 py-2 text-sm"
-              >
-                Sign out
-              </button>
-            </div>
-          ) : null}
-        </header>
+        ) : null}
+      </header>
 
-        <section className="rounded-2xl border border-sky-100 bg-white p-8 shadow-sm">
-          <h1 className="text-4xl font-semibold tracking-tight">Calm customer chat for project teams</h1>
-          <p className="mt-4 max-w-2xl text-slate-600">
-            Rayos helps businesses and their end users stay aligned through clear project conversations.
+      {/* Hero */}
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-16 px-6 py-16">
+        <section className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Calm customer chat<br />for project teams
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
+            Rayos helps businesses and their customers stay aligned through clear, focused project conversations.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             {user ? (
-              <>
-                <Link href="/start" className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white">
+              <Button size="lg" asChild>
+                <Link href="/start">
                   Continue to Rayos
+                  <ArrowRight className="size-4" />
                 </Link>
-              </>
+              </Button>
             ) : (
               <>
-                <a href="/sign-in" className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white">
-                  Sign in
-                </a>
-                <a href="/sign-up" className="rounded-lg border border-sky-200 bg-white px-4 py-2 font-medium">
-                  Sign up
-                </a>
+                <Button size="lg" asChild>
+                  <Link href="/sign-in">
+                    Sign in
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/sign-up">Sign up</Link>
+                </Button>
               </>
             )}
           </div>
-          {deleteError ? <p className="mt-3 text-sm text-red-600">{deleteError}</p> : null}
+        </section>
+
+        {/* Value props */}
+        <section className="grid gap-6 sm:grid-cols-3">
+          <div className="rounded-xl border border-border bg-card p-6">
+            <MessageSquare className="size-8 text-primary" />
+            <h3 className="mt-3 font-semibold">Clear conversations</h3>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              One focused thread per customer. No noise, no lost messages.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <Shield className="size-8 text-primary" />
+            <h3 className="mt-3 font-semibold">Secure by default</h3>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Multi-tenant isolation ensures customer data never crosses boundaries.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <Zap className="size-8 text-primary" />
+            <h3 className="mt-3 font-semibold">Real-time updates</h3>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Messages appear instantly. No refreshing, no waiting.
+            </p>
+          </div>
         </section>
       </div>
     </main>

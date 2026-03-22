@@ -1,26 +1,128 @@
 @import 'tailwindcss';
 
+/*
+ * Rayos Design Tokens
+ *
+ * Brand: "Rayos" = rays of light.
+ * Feel: clear morning light — warm, calm, trustworthy.
+ * Palette: sky-blue primary, warm amber accent, slate neutrals.
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Primary (sky blue) ── */
+  --primary: oklch(0.685 0.169 237.323);
+  --primary-foreground: oklch(0.985 0.002 247.858);
+
+  /* ── Accent (warm amber) ── */
+  --accent: oklch(0.954 0.038 75.164);
+  --accent-foreground: oklch(0.514 0.108 61.907);
+
+  /* ── Surfaces ── */
+  --background: oklch(0.985 0.002 247.858);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+
+  /* ── Secondary ── */
+  --secondary: oklch(0.968 0.007 247.858);
+  --secondary-foreground: oklch(0.208 0.042 264.695);
+
+  /* ── Muted ── */
+  --muted: oklch(0.968 0.007 247.858);
+  --muted-foreground: oklch(0.554 0.022 257.417);
+
+  /* ── Borders & rings ── */
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.685 0.169 237.323);
+
+  /* ── Destructive ── */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.002 247.858);
+
+  /* ── Chart palette ── */
+  --chart-1: oklch(0.685 0.169 237.323);
+  --chart-2: oklch(0.8 0.123 75.164);
+  --chart-3: oklch(0.554 0.022 257.417);
+  --chart-4: oklch(0.696 0.17 162.48);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* ── Sidebar ── */
+  --sidebar: oklch(0.985 0.002 247.858);
+  --sidebar-foreground: oklch(0.208 0.042 264.695);
+  --sidebar-primary: oklch(0.685 0.169 237.323);
+  --sidebar-primary-foreground: oklch(0.985 0.002 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.858);
+  --sidebar-accent-foreground: oklch(0.208 0.042 264.695);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.685 0.169 237.323);
+
+  /* ── Radii ── */
+  --radius: 0.625rem;
+
+  /* ── Rayos brand extras ── */
+  --surface: oklch(0.968 0.007 247.858);
+  --success: oklch(0.696 0.17 162.48);
+  --success-foreground: oklch(1 0 0);
+  --warning: oklch(0.8 0.123 75.164);
+  --warning-foreground: oklch(0.344 0.108 61.907);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-surface: var(--surface);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
 }

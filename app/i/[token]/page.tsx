@@ -5,6 +5,14 @@ import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@workos-inc/authkit-nextjs/components';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
+import { toast } from 'sonner';
+import { ArrowRight, LogIn, UserPlus } from 'lucide-react';
 
 export default function IntakePage() {
   const router = useRouter();
@@ -14,90 +22,95 @@ export default function IntakePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const intakeBusiness = useQuery(api.rayos.getIntakeBusiness, { token });
   const claimIntakeLink = useMutation(api.rayos.claimIntakeLink);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
     setIsSubmitting(true);
     try {
       const chosenEmail = (email || user?.email || '').trim();
       const result = await claimIntakeLink({ token, email: chosenEmail, name: name.trim() || undefined });
       router.push(`/end-user?conversationId=${result.conversationId}`);
     } catch (submissionError) {
-      setError(submissionError instanceof Error ? submissionError.message : 'Unable to join this business right now.');
+      toast.error(submissionError instanceof Error ? submissionError.message : 'Unable to join this business right now.');
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-sky-50 px-6">
-      <section className="w-full max-w-lg rounded-2xl border border-sky-100 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-semibold text-slate-900">
-          {intakeBusiness ? `Join ${intakeBusiness.businessName}` : 'Join project chat'}
-        </h1>
-        {!user ? (
-          <>
-            <p className="mt-2 text-sm text-slate-600">
-              Sign in or sign up to join this conversation. We will connect your account to this business.
-            </p>
-            <div className="mt-6 flex gap-2">
-              <a href="/sign-in" className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white">
-                Sign in
-              </a>
-              <a href="/sign-up" className="rounded-lg border border-sky-200 px-4 py-2 text-sm font-medium text-slate-700">
-                Sign up
-              </a>
+    <main className="flex min-h-screen items-center justify-center bg-background px-6">
+      <div className="w-full max-w-md space-y-8">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Image src="/rayos-bolts.svg" alt="Rayos" width={36} height={36} />
+          {intakeBusiness === undefined ? (
+            <Skeleton className="h-8 w-48" />
+          ) : (
+            <h1 className="text-2xl font-bold tracking-tight">
+              {intakeBusiness ? `Join ${intakeBusiness.businessName}` : 'Join project chat'}
+            </h1>
+          )}
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          {!user ? (
+            <div className="space-y-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                Sign in or create an account to join this conversation. We will connect your account to this business.
+              </p>
+              <div className="flex flex-col gap-2">
+                <Button asChild>
+                  <a href="/sign-in">
+                    <LogIn className="size-4" />
+                    Sign in
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href="/sign-up">
+                    <UserPlus className="size-4" />
+                    Create account
+                  </a>
+                </Button>
+              </div>
             </div>
-          </>
-        ) : (
-          <p className="mt-2 text-sm text-slate-600">
-            You are signed in. Confirm your email and optionally add your name to join this chat.
-          </p>
-        )}
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email || user?.email || ''}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@company.com"
-              required
-              className="w-full rounded-lg border border-sky-200 px-3 py-2 text-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700">
-              Name (optional)
-            </label>
-            <input
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Your name"
-              className="w-full rounded-lg border border-sky-200 px-3 py-2 text-sm"
-            />
-          </div>
-
-          {error ? <p className="rounded-lg bg-red-50 p-2 text-sm text-red-600">{error}</p> : null}
-
-          <button
-            type="submit"
-            disabled={isSubmitting || intakeBusiness === null || !user}
-            className="w-full rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-          >
-            {isSubmitting ? 'Joining...' : 'Join chat'}
-          </button>
-        </form>
-      </section>
+          ) : (
+            <>
+              <p className="text-sm text-muted-foreground">
+                Confirm your email and optionally add your name to join the chat.
+              </p>
+              <Separator className="my-4" />
+              <form onSubmit={onSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email || user?.email || ''}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name (optional)</Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Your name"
+                  />
+                </div>
+                <Button type="submit" disabled={isSubmitting || intakeBusiness === null} className="w-full">
+                  {isSubmitting ? 'Joining...' : 'Join chat'}
+                  <ArrowRight className="size-4" />
+                </Button>
+              </form>
+            </>
+          )}
+        </div>
+      </div>
     </main>
   );
 }
