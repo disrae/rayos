@@ -1,0 +1,13 @@
+---
+description: Rayos visual and UX direction
+globs: "{app,components}/**/*.{ts,tsx,css}"
+alwaysApply: false
+---
+
+# Rayos Brand and UX
+
+- Brand qualities: light, peaceful, clean, and professional.
+- Keep screens focused: avoid visual clutter and unnecessary decoration.
+- Use clear hierarchy, generous spacing, and concise UI text.
+- Favor accessible contrast, readable typography, and predictable interactions.
+- In chat surfaces, optimize for calm scanning: timestamp clarity, role clarity, and message legibility.

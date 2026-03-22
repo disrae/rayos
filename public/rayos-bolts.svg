@@ -3,12 +3,12 @@
   <desc id="desc">Two angular lightning bolts forming a bold geometric logo mark.</desc>
   <defs>
     <linearGradient id="boltA" x1="92" y1="72" x2="252" y2="440" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FDE047"/>
-      <stop offset="1" stop-color="#F59E0B"/>
+      <stop offset="0" stop-color="#7DD3FC"/>
+      <stop offset="1" stop-color="#38BDF8"/>
     </linearGradient>
     <linearGradient id="boltB" x1="260" y1="72" x2="420" y2="440" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FACC15"/>
-      <stop offset="1" stop-color="#D97706"/>
+      <stop offset="0" stop-color="#67E8F9"/>
+      <stop offset="1" stop-color="#22D3EE"/>
     </linearGradient>
   </defs>
 

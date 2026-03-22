@@ -1,0 +1,14 @@
+---
+description: Convex safety and data-access guardrails
+globs: "convex/**/*.ts"
+alwaysApply: false
+---
+
+# Rayos Convex Guardrails
+
+- Enforce authentication and tenant/organization checks in all public functions.
+- Validate all public args and return predictable typed results.
+- Keep query/mutation/action wrappers thin; move logic into reusable TypeScript helpers.
+- Use indexes over broad filtering for production query paths.
+- Avoid cache-breaking patterns in queries (for example time-based non-determinism).
+- Prefer clear, user-safe errors for expected failures and throw for exceptional cases.
