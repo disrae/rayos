@@ -90,10 +90,10 @@ export default function StartPage() {
           <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
             <div className="flex items-center gap-2.5">
               <Building2 className="size-5 text-primary" />
-              <h1 className="text-xl font-semibold">Create your business account</h1>
+              <h1 className="text-xl font-semibold">Set up your workspace</h1>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Business owners sign up here, then generate invite links for customers.
+              Create a workspace, then share invite links with your customers.
             </p>
 
             <form onSubmit={onCreateBusiness} className="mt-6 space-y-4">
@@ -139,10 +139,10 @@ export default function StartPage() {
           <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
             <div className="flex items-center gap-2.5">
               <LinkIcon className="size-5 text-primary" />
-              <h2 className="text-xl font-semibold">Have an invite link?</h2>
+              <h2 className="text-xl font-semibold">Got an invite?</h2>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Customers paste the invite link or token they received from a business.
+              Paste the link or token your project team shared with you.
             </p>
             <div className="mt-6 space-y-4">
               <div className="space-y-2">
@@ -163,9 +163,9 @@ export default function StartPage() {
             <Separator className="my-6" />
 
             <div className="text-center text-sm text-muted-foreground">
-              <p>Not sure what to do?</p>
+              <p>Not sure which?</p>
               <p className="mt-1">
-                Ask your project manager for an invite link, or create a business account to get started.
+                Ask your project team for an invite link, or create a workspace to get started.
               </p>
             </div>
           </div>

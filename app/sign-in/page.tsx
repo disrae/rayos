@@ -14,7 +14,7 @@ export default async function SignInPage() {
           <Image src="/rayos-bolts.svg" alt="Rayos" width={40} height={40} />
           <h1 className="text-2xl font-bold tracking-tight text-foreground">Welcome back</h1>
           <p className="text-sm text-muted-foreground">
-            Sign in to your Rayos account to continue your conversations.
+            Sign in to pick up where you left off.
           </p>
         </div>
 

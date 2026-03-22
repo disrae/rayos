@@ -12,9 +12,9 @@ export default async function SignUpPage() {
       <div className="w-full max-w-sm space-y-8 text-center">
         <div className="flex flex-col items-center gap-3">
           <Image src="/rayos-bolts.svg" alt="Rayos" width={40} height={40} />
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">Get started with Rayos</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">Start with Rayos</h1>
           <p className="text-sm text-muted-foreground">
-            Create your account and start communicating clearly with your customers.
+            Create an account to bring clarity to your project conversations.
           </p>
         </div>
 

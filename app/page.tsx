@@ -18,7 +18,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import { ArrowRight, MessageSquare, Shield, Zap } from 'lucide-react';
+import { ArrowRight, MessageSquare, Building2, Zap } from 'lucide-react';
 
 export default function HomePage() {
   const { user, signOut } = useAuth();
@@ -90,10 +90,10 @@ export default function HomePage() {
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-16 px-6 py-16">
         <section className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Calm customer chat<br />for project teams
+            Keep your customers<br />in the light.
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-            Rayos helps businesses and their customers stay aligned through clear, focused project conversations.
+            One focused conversation per customer. No email chains, no missed updates, no lost context.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {user ? (
@@ -123,23 +123,23 @@ export default function HomePage() {
         <section className="grid gap-6 sm:grid-cols-3">
           <div className="rounded-xl border border-border bg-card p-6">
             <MessageSquare className="size-8 text-primary" />
-            <h3 className="mt-3 font-semibold">Clear conversations</h3>
+            <h3 className="mt-3 font-semibold">One thread, one customer</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              One focused thread per customer. No noise, no lost messages.
+              Every customer gets a dedicated conversation. Nothing gets buried, nothing gets crossed.
             </p>
           </div>
           <div className="rounded-xl border border-border bg-card p-6">
-            <Shield className="size-8 text-primary" />
-            <h3 className="mt-3 font-semibold">Secure by default</h3>
+            <Building2 className="size-8 text-primary" />
+            <h3 className="mt-3 font-semibold">Built for project work</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              Multi-tenant isolation ensures customer data never crosses boundaries.
+              Construction, renovation, design, consulting -- if you deliver projects, Rayos keeps your customers close.
             </p>
           </div>
           <div className="rounded-xl border border-border bg-card p-6">
             <Zap className="size-8 text-primary" />
-            <h3 className="mt-3 font-semibold">Real-time updates</h3>
+            <h3 className="mt-3 font-semibold">Real-time, always</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              Messages appear instantly. No refreshing, no waiting.
+              Messages arrive instantly. No refreshing, no waiting.
             </p>
           </div>
         </section>

@@ -58,7 +58,7 @@ export default function IntakePage() {
           {!user ? (
             <div className="space-y-4 text-center">
               <p className="text-sm text-muted-foreground">
-                Sign in or create an account to join this conversation. We will connect your account to this business.
+                Sign in or create an account to join the conversation.
               </p>
               <div className="flex flex-col gap-2">
                 <Button asChild>
@@ -78,7 +78,7 @@ export default function IntakePage() {
           ) : (
             <>
               <p className="text-sm text-muted-foreground">
-                Confirm your email and optionally add your name to join the chat.
+                Confirm your details to join the conversation.
               </p>
               <Separator className="my-4" />
               <form onSubmit={onSubmit} className="space-y-4">

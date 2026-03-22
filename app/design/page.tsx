@@ -81,15 +81,103 @@ export default function DesignPage() {
             <h1 className="text-3xl font-bold tracking-tight">Rayos Design System</h1>
           </div>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            A living reference of colors, typography, and components for Rayos.
-            The brand feels like clear morning light: warm, calm, and trustworthy.
-            Sky-blue primary for trust and clarity. Warm amber accent for a nod to
-            &ldquo;rayos&rdquo; (rays of sunlight). Slate neutrals for text and structure.
+            A living reference of brand language, colors, typography, and components for Rayos.
+            Named for rays of sunlight, Rayos brings light to project communication.
+            Sky-blue primary for trust. Warm amber accent for a nod to &ldquo;rayos.&rdquo;
+            Slate neutrals for structure.
           </p>
         </div>
       </div>
 
       <div className="mx-auto max-w-5xl space-y-16 px-6 py-12">
+        {/* ── 0. Brand Language ── */}
+        <Section title="Brand Language" description="The verbal identity of Rayos. Every heading, label, and description should follow these principles.">
+          <div className="space-y-6">
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="text-lg font-semibold">Essence</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Rayos brings light to project communication. Named for rays of sunlight,
+                it replaces scattered emails, missed calls, and lost threads with one clear
+                conversation per customer.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="text-lg font-semibold">Tagline</h3>
+              <p className="mt-2 text-xl font-medium tracking-tight text-foreground">
+                &ldquo;Keep your customers in the light.&rdquo;
+              </p>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                Double meaning: keep them informed, and a nod to rayos (rays of light).
+                Warm, not aggressive. Centers the customer relationship.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="text-lg font-semibold">Voice Principles</h3>
+              <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-sm font-medium">Clear over clever</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    Say what you mean. No puns, no buzzwords, no &ldquo;leverage&rdquo; or &ldquo;streamline.&rdquo;
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Calm confidence</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    Rayos doesn&rsquo;t shout. Short sentences, no exclamation marks in UI copy.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Warm but professional</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    Like a good project manager: friendly, direct, reliable.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Grounded</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    Real examples, real language. &ldquo;Customer&rdquo; not &ldquo;stakeholder.&rdquo;
+                    &ldquo;Chat&rdquo; not &ldquo;communication platform.&rdquo;
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="text-lg font-semibold">Copy Patterns</h3>
+              <div className="mt-3 space-y-3">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="mb-2 font-medium text-success">Prefer</p>
+                    <ul className="space-y-1.5 text-muted-foreground">
+                      <li>&ldquo;Keep your customers in the light.&rdquo;</li>
+                      <li>&ldquo;One thread, one customer.&rdquo;</li>
+                      <li>&ldquo;Built for project work.&rdquo;</li>
+                      <li>&ldquo;Pick up where you left off.&rdquo;</li>
+                      <li>&ldquo;Set up your workspace.&rdquo;</li>
+                      <li>&ldquo;Got an invite?&rdquo;</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2 font-medium text-destructive">Avoid</p>
+                    <ul className="space-y-1.5 text-muted-foreground">
+                      <li>&ldquo;Supercharge your communication!&rdquo;</li>
+                      <li>&ldquo;Streamline stakeholder engagement.&rdquo;</li>
+                      <li>&ldquo;Leverage our platform.&rdquo;</li>
+                      <li>&ldquo;The #1 solution for...&rdquo;</li>
+                      <li>&ldquo;Unlock the power of...&rdquo;</li>
+                      <li>&ldquo;Seamless integration.&rdquo;</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Separator />
+
         {/* ── 1. Colors ── */}
         <Section title="Colors" description="Core palette derived from CSS custom properties. Sky-blue primary, warm amber accent, slate neutrals, and semantic colors for status feedback.">
           <div className="space-y-6">
